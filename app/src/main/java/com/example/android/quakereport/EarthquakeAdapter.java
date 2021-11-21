@@ -1,12 +1,18 @@
 package com.example.android.quakereport;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -138,6 +144,17 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         // Get the date of an earthquake from the currentEarthquake object and set this text on
         // the dateTextView.
         timeTextView.setText(formatDateTime(currentEarthquake.getTimeInMilliseconds(), "h:mm a"));
+
+        listItemView.setOnClickListener(v -> {
+            Log.d("EarthquakeAdapter", "Button clicked");
+            Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
+            Intent intent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
+            try {
+                getContext().startActivity(intent);
+            } catch (ActivityNotFoundException ex) {
+                Toast.makeText(getContext(), "A web bowser was not found on device.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Return the whole list item layout (containing 2 TextViews) so that it can be shown in
         // the ListView.
