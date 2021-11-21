@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,9 +46,11 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         // Find the TextView in the earthquake_list_item.xml layout with the ID mag.
         TextView magTextView = listItemView.findViewById(R.id.magnitude);
+        // Format the magnitude to show 1 decimal place
+        DecimalFormat formatter = new DecimalFormat("0.0");
         // Get the magnitude of an earthquake from the currentEarthquake object and set this text on
         // the magTextView.
-        magTextView.setText(currentEarthquake.getMag());
+        magTextView.setText(formatter.format(currentEarthquake.getMagnitude()));
 
         String originalLocation = currentEarthquake.getLocation();
         String primaryLocation,

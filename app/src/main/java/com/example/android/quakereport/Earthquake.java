@@ -4,7 +4,7 @@ public class Earthquake {
     /**
      * The magnitude of an earthquake
      */
-    private final double mMag;
+    private final double mMagnitude;
     /**
      * The location of an earthquake
      */
@@ -15,13 +15,13 @@ public class Earthquake {
     private final long mTimeInMilliseconds;
 
     public Earthquake(double magnitude, String location, long timeInMilliseconds) {
-        mMag = magnitude;
+        mMagnitude = magnitude;
         mLocation = location;
         mTimeInMilliseconds = timeInMilliseconds;
     }
 
-    public String getMag() {
-        return Double.toString(mMag);
+    public double getMagnitude() {
+        return mMagnitude;
     }
 
     public String getLocation() {
