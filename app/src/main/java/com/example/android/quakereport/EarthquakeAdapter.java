@@ -1,7 +1,6 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
+    private static final String LOCATION_SEPARATOR = " of ";
+
     public EarthquakeAdapter(@NonNull Context context, @NonNull ArrayList<Earthquake> objects) {
         super(context, 0, objects);
     }
@@ -48,26 +49,29 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         // the magTextView.
         magTextView.setText(currentEarthquake.getMag());
 
-        // Find the TextView in the earthquake_list_item.xml layout with the ID location.
-        TextView locationOffsetTextView = listItemView.findViewById(R.id.location_offset);
-
-        // Find the TextView in the earthquake_list_item.xml layout with the ID location.
-        TextView primaryLocationTextView = listItemView.findViewById(R.id.primary_location);
-
-        String location = currentEarthquake.getLocation();
-        int ofIndex = location.indexOf("of")+2;
-        if (location.contains("of")) {
-            Log.d("EarthquakeAdapter", "of index = " + ofIndex);
-            Log.d("EarthquakeAdapter", "Offset String = " + location.substring(0, ofIndex));
-            Log.d("EarthquakeAdapter", "Primary String = " + location.substring(ofIndex+1));
-            locationOffsetTextView.setText(location.substring(0, ofIndex));
-            primaryLocationTextView.setText(location.substring(ofIndex+1));
+        String originalLocation = currentEarthquake.getLocation();
+        String primaryLocation,
+                locationOffset;
+        if (originalLocation.contains(LOCATION_SEPARATOR)) {
+            String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+            locationOffset = parts[0] + LOCATION_SEPARATOR;
+            primaryLocation = parts[1];
         } else {
-            // Get the location of an earthquake from the currentEarthquake object and set this text on
-            // the locationTextView.
-            locationOffsetTextView.setText("Near the");
-            primaryLocationTextView.setText(location);
+            locationOffset = getContext().getString(R.string.near_the);
+            primaryLocation = originalLocation;
         }
+
+        // Find the TextView in the earthquake_list_item.xml layout with the ID primary_location.
+        TextView primaryLocationView = listItemView.findViewById(R.id.primary_location);
+        // Get the date of an earthquake from the currentEarthquake object and set this text on
+        // the primaryLocationView.
+        primaryLocationView.setText(primaryLocation);
+
+        // Find the TextView in the earthquake_list_item.xml layout with the ID location_offset.
+        TextView locationOffsetView = listItemView.findViewById(R.id.location_offset);
+        // Get the date of an earthquake from the currentEarthquake object and set this text on
+        // the locationOffsetView.
+        locationOffsetView.setText(locationOffset);
 
         // Find the TextView in the earthquake_list_item.xml layout with the ID date.
         TextView dateTextView = listItemView.findViewById(R.id.date);
