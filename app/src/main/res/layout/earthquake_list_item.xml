@@ -11,10 +11,17 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/magnitude_circle"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
         tools:android="8.9" />
 
     <TextView
         android:id="@+id/location_offset"
+        android:layout_marginStart="16dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
