@@ -64,8 +64,9 @@ public final class QueryUtils {
                         properties = currentEarthquake.getJSONObject("properties");
 
                 double mag = properties.optDouble("mag");
-                String place = properties.optString("place"),
-                        time = String.valueOf(properties.optInt("time"));
+                String place = properties.optString("place");
+//                        time = String.valueOf(properties.optInt("time"));
+                long time = properties.getLong("time");
 
                 // Add Earthquake object to earthquakes array
                 earthquakes.add(new Earthquake(mag, place, time));

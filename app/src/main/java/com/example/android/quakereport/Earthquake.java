@@ -4,20 +4,20 @@ public class Earthquake {
     /**
      * The magnitude of an earthquake
      */
-    private double mMag;
+    private final double mMag;
     /**
      * The location of an earthquake
      */
-    private String mLocation,
+    private final String mLocation;
     /**
      * The date af an earthquake;
      */
-    mDate;
+    private final long mTimeInMilliseconds;
 
-    public Earthquake(double magnitude, String location, String date) {
+    public Earthquake(double magnitude, String location, long timeInMilliseconds) {
         mMag = magnitude;
         mLocation = location;
-        mDate = date;
+        mTimeInMilliseconds = timeInMilliseconds;
     }
 
     public String getMag() {
@@ -28,7 +28,7 @@ public class Earthquake {
         return mLocation;
     }
 
-    public String getDate() {
-        return mDate;
+    public long getTimeInMilliseconds() {
+        return mTimeInMilliseconds;
     }
 }
