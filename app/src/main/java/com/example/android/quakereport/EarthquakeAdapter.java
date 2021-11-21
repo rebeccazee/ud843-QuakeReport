@@ -1,6 +1,7 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,10 +49,25 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         magTextView.setText(currentEarthquake.getMag());
 
         // Find the TextView in the earthquake_list_item.xml layout with the ID location.
-        TextView locationTextView = listItemView.findViewById(R.id.location);
-        // Get the location of an earthquake from the currentEarthquake object and set this text on
-        // the locationTextView.
-        locationTextView.setText(currentEarthquake.getLocation());
+        TextView locationOffsetTextView = listItemView.findViewById(R.id.location_offset);
+
+        // Find the TextView in the earthquake_list_item.xml layout with the ID location.
+        TextView primaryLocationTextView = listItemView.findViewById(R.id.primary_location);
+
+        String location = currentEarthquake.getLocation();
+        int ofIndex = location.indexOf("of")+2;
+        if (location.contains("of")) {
+            Log.d("EarthquakeAdapter", "of index = " + ofIndex);
+            Log.d("EarthquakeAdapter", "Offset String = " + location.substring(0, ofIndex));
+            Log.d("EarthquakeAdapter", "Primary String = " + location.substring(ofIndex+1));
+            locationOffsetTextView.setText(location.substring(0, ofIndex));
+            primaryLocationTextView.setText(location.substring(ofIndex+1));
+        } else {
+            // Get the location of an earthquake from the currentEarthquake object and set this text on
+            // the locationTextView.
+            locationOffsetTextView.setText("Near the");
+            primaryLocationTextView.setText(location);
+        }
 
         // Find the TextView in the earthquake_list_item.xml layout with the ID date.
         TextView dateTextView = listItemView.findViewById(R.id.date);
